@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+
+        registerForPushNotifications()
         return true
     }
 
@@ -42,5 +45,109 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 
+    //1. UN Setup
+    func registerForPushNotifications() {
+        if #available(iOS 10.0, *) {
+            // For iOS 10 display notification (sent via APNS)
+
+            // Create the custom actions for the TIMER_EXPIRED category.
+            let snoozeAction = UNNotificationAction(identifier: "SNOOZE_ACTION",
+                                                    title: "Snooze",
+                                                    options: UNNotificationActionOptions(rawValue: 0))
+            let stopAction = UNNotificationAction(identifier: "STOP_ACTION",
+                                                  title: "Stop",
+                                                  options: .foreground)
+
+
+            let generalCategory = UNNotificationCategory(identifier: "CATEGORY",
+                                                         actions: [snoozeAction, stopAction],
+                                                         intentIdentifiers: [],
+                                                         options: .customDismissAction)
+
+
+
+            // Register the category.
+            UNUserNotificationCenter.current().setNotificationCategories([generalCategory])
+
+
+
+            UNUserNotificationCenter.current().delegate = self
+
+            let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+            UNUserNotificationCenter.current().requestAuthorization(
+            options: authOptions){
+                (granted, error) in
+                print("Permission granted: \(granted)")
+                guard granted else { return }
+                self.getNotificationSettings()
+            }
+        } else {
+            let settings: UIUserNotificationSettings =
+                UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+            UIApplication.shared.registerUserNotificationSettings(settings)
+        }
+    }
+
+    //1. UN Setup
+    func getNotificationSettings() {
+        UNUserNotificationCenter.current().getNotificationSettings { (settings) in
+            print("Notification settings: \(settings)")
+            guard settings.authorizationStatus == .authorized else { return }
+            DispatchQueue.main.async {
+                UIApplication.shared.registerForRemoteNotifications()
+            }
+        }
+    }
+
+    //2. Register UN
+    func application(_ application: UIApplication,
+                     didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let tokenParts = deviceToken.map { data -> String in
+            return String(format: "%02.2hhx", data)
+        }
+
+        let token = tokenParts.joined()
+        print("Device Token: \(token)")
+    }
+
+    func application(_ application: UIApplication,
+                     didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("Failed to register: \(error)")
+    }
+
+    //3. Handle reveived notification (when no UN delegate)
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        //didn't implement willPresent
+        print("When Dint Implement Will Present")
+    }
+}
+
+
+extension AppDelegate : UNUserNotificationCenterDelegate {
+
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        print("Tap On notification")
+        if response.actionIdentifier == UNNotificationDismissActionIdentifier {
+            // The user dismissed the notification without taking action
+            print("Dismiss")
+        }
+        else if response.actionIdentifier == UNNotificationDefaultActionIdentifier {
+            // The user launched the app
+            print("Launch")
+        }
+
+        completionHandler()
+    }
+
+    //3. Handle reveived notification (with UN, can present the Notification)
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+
+        //present notification when app is open
+        //        if 1 > 10 {
+        print("Will Present")
+        completionHandler([.alert, .badge, .sound])
+        //        }
+    }
 }
 

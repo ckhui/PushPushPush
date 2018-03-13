@@ -12,6 +12,7 @@
 		5F6A4E862057AEF200111B4A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F6A4E842057AEF200111B4A /* Main.storyboard */; };
 		5F6A4E882057AEF200111B4A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F6A4E872057AEF200111B4A /* Assets.xcassets */; };
 		5F6A4E8B2057AEF200111B4A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F6A4E892057AEF200111B4A /* LaunchScreen.storyboard */; };
+		5F6A4E942057B4C300111B4A /* copy in Resources */ = {isa = PBXBuildFile; fileRef = 5F6A4E932057B4C300111B4A /* copy */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,8 @@
 		5F6A4E872057AEF200111B4A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5F6A4E8A2057AEF200111B4A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5F6A4E8C2057AEF200111B4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5F6A4E922057B1B800111B4A /* TestingApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TestingApp.entitlements; sourceTree = "<group>"; };
+		5F6A4E932057B4C300111B4A /* copy */ = {isa = PBXFileReference; lastKnownFileType = text; path = copy; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,7 +57,9 @@
 		5F6A4E7F2057AEF200111B4A /* TestingApp */ = {
 			isa = PBXGroup;
 			children = (
+				5F6A4E922057B1B800111B4A /* TestingApp.entitlements */,
 				5F6A4E802057AEF200111B4A /* AppDelegate.swift */,
+				5F6A4E932057B4C300111B4A /* copy */,
 				5F6A4E822057AEF200111B4A /* ViewController.swift */,
 				5F6A4E842057AEF200111B4A /* Main.storyboard */,
 				5F6A4E872057AEF200111B4A /* Assets.xcassets */,
@@ -97,6 +102,11 @@
 					5F6A4E7C2057AEF100111B4A = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -126,6 +136,7 @@
 				5F6A4E8B2057AEF200111B4A /* LaunchScreen.storyboard in Resources */,
 				5F6A4E882057AEF200111B4A /* Assets.xcassets in Resources */,
 				5F6A4E862057AEF200111B4A /* Main.storyboard in Resources */,
+				5F6A4E942057B4C300111B4A /* copy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,9 +286,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = TestingApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = CKH.TestingApp;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.next-ios.NAME";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -289,9 +302,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = TestingApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = CKH.TestingApp;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.next-ios.NAME";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
